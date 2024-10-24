@@ -8,28 +8,29 @@ const PORT = process.env.PORT || 5000;
 const { fetchAndStoreData } = require("./src/services/etlService");
 const reportRoutes = require("./src/routes/reportRoutes");
 
+const startServer = async () => {
+  try {
+    // mongodb connection
+    connectDB();
 
+    // middleware
+    app.use(express.json());
 
-try {
+    // Use routes
+    app.use("/api/leads", leadRoutes);
+    app.use("/api/campaigns", campaignRoutes);
+    app.use("/api/reports", reportRoutes); // report route
 
-  // mongodb connection
-  connectDB();
+    app.get("/", (req, res) => {
+      res.json("server from leads");
+    });
 
-  // middleware
-  app.use(express.json());
+    app.listen(PORT, () => {
+      console.log("server running on port", PORT);
+    });
+  } catch (error) {
+    console.log("Error starting the server:", error);
+  }
+};
 
-  // Use routes
-  app.use("/api/leads", leadRoutes);
-  app.use("/api/campaigns", campaignRoutes);
-  app.use("/api/reports", reportRoutes); // report route
-
-  app.get("/", (req, res) => {
-    res.json("server from leads");
-  });
-
-  app.listen(PORT, () => {
-    console.log("server running on port", PORT);
-  });
-} catch (error) {
-  console.log("Error starting the server:", error);
-}
+startServer();

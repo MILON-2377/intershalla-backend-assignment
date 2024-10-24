@@ -7,7 +7,7 @@ const generateLeadReport = async () => {
     const leads = await Lead.find();
 
     // define the field to be included in the csv
-    const field = ['name','email','phone','campaign','createdAt'];
+    const field = ['_id','name','email','phone','campaign','createdAt'];
     const opts = {field};
 
     // convert json to csv

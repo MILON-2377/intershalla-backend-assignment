@@ -8,7 +8,7 @@ router.get("/", async(req, res) =>{
 
         // set the response headers to indicate a file download
         res.setHeader('Content-Type', 'text/csv');
-        res.setHeader('Content-Disposition','attachment; filename=leads_report.csv');
+        res.attachment('lead_report.csv');
 
         res.send(csvData);
     } catch (error) {
